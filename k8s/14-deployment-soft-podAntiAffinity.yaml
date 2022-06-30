@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-www
+spec:
+  replicas: 8
+  selector:
+    matchLabels:
+      app: my-www
+  template:
+    metadata:
+      labels:
+        app: my-www
+    spec:
+      containers:
+      - name: my-www
+        image: nginx
+        resources: {}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                topologyKey: kubernetes.io/hostname
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - "my-www" 
+              weight: 100
