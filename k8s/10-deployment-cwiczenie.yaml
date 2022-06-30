@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kuard-config
+data:
+  test: "pracuj.pl"
+  test2: "pracuj.pl jest super!"
+---
+# Deployment
+# zaladowanie zmiennych srodowiskowych z kuard-config 
+# 2 repliki
+# image: gcr.io/kuar-demo/kuard-amd64:1
+# Dodac livenessProbe i readinessProbe
