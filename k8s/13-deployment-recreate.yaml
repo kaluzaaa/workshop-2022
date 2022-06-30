@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kuard
+spec:
+  replicas: 10
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: kuard
+  template:
+    metadata:
+      labels:
+        app: kuard
+    spec:
+      containers:
+      - name: kuard
+        image: gcr.io/kuar-demo/kuard-amd64:3
+        resources: {}
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          failureThreshold: 3
+          periodSeconds: 5
+          initialDelaySeconds: 15
+          successThreshold: 1
