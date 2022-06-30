@@ -16,6 +16,10 @@ spec:
       httpGet:
         path: /healthy
         port: 8080
+      failureThreshold: 5
+      periodSeconds: 10
+      initialDelaySeconds: 15
+      successThreshold: 1
     readinessProbe:
       httpGet:
         path: /ready
