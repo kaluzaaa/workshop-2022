@@ -44,7 +44,7 @@ stages:
     dependsOn: Build
     jobs:
     - deployment: Production
-      environment: prod-k8s
+      environment: prod-k8s.$(resourceName)
       strategy:
        runOnce:
          deploy:
