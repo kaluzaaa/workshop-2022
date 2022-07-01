@@ -22,3 +22,21 @@ stages:
           command: 'buildAndPush'
           Dockerfile: 'src/MinApi/Dockerfile'
           buildContext: 'src/MinApi/'
+      - task: replacetokens@5
+        inputs:
+          targetFiles: 'infra/*.yaml'
+          encoding: 'auto'
+          tokenPattern: 'default'
+          writeBOM: true
+          actionOnMissing: 'warn'
+          keepToken: false
+          actionOnNoFiles: 'continue'
+          enableTransforms: false
+          enableRecursion: false
+          useLegacyPattern: false
+          enableTelemetry: true
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: 'infra/*.yaml'
+          artifact: 'manifest'
+          publishLocation: 'pipeline'
