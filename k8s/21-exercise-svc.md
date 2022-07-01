@@ -32,3 +32,4 @@ spec:
 - slucha ona na porcie 80
 - wystawic ja do swiata
 - zmienej srodowiskowej o nazwie REDIS w ktorej jest nazwa serwisu z redisem, to jest connection string. Port jest juz ustawiony w applikacji.
+- Dla deployemntu REDIS dodanie servcie clusterIP na porcie redis/6379
