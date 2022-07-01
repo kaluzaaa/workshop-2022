@@ -35,8 +35,23 @@ stages:
           enableRecursion: false
           useLegacyPattern: false
           enableTelemetry: true
-      - task: PublishPipelineArtifact@1
-        inputs:
-          targetPath: 'infra/'
-          artifact: 'manifest'
-          publishLocation: 'pipeline'
+      - upload: infra
+        artifact: infra
+
+
+  - stage: Production
+    displayName: Deploy stage
+    dependsOn: Build
+    jobs:
+    - deployment: Production
+      environment: prod-k8s
+      strategy:
+       runOnce:
+         deploy:
+           steps:
+           - task: KubernetesManifest@0
+             inputs:
+               action: 'deploy'
+               kubernetesServiceConnection: 'warsztaty-aks-eun-test'
+               namespace: 'demo'
+               manifests: '$(Pipeline.Workspace)/infra/*.yaml'
