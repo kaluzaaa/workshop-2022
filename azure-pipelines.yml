@@ -37,6 +37,6 @@ stages:
           enableTelemetry: true
       - task: PublishPipelineArtifact@1
         inputs:
-          targetPath: 'infra/*.yaml'
+          targetPath: 'infra/'
           artifact: 'manifest'
           publishLocation: 'pipeline'
