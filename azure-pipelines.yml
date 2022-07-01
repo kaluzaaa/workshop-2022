@@ -10,6 +10,9 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- task: CmdLine@2
+  inputs:
+    script: 'printenv'
 - task: Docker@2
   inputs:
     containerRegistry: 'warsztaty.azurecr.io'
