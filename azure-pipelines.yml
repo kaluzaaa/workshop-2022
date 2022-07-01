@@ -9,29 +9,16 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- task: Docker@2
-  inputs:
-    containerRegistry: 'warsztaty.azurecr.io'
-    repository: 'MinApi'
-    command: 'buildAndPush'
-    Dockerfile: 'src/MinApi/Dockerfile'
-    buildContext: 'src/MinApi/'
 
-- task: replacetokens@5
-  inputs:
-    targetFiles: 'infra/minapi.yaml'
-    encoding: 'auto'
-    tokenPattern: 'default'
-    writeBOM: true
-    actionOnMissing: 'warn'
-    keepToken: false
-    actionOnNoFiles: 'continue'
-    enableTransforms: false
-    enableRecursion: false
-    useLegacyPattern: false
-    enableTelemetry: true
-
-- task: CmdLine@2
-  inputs:
-    script: 'cat infra/minapi.yaml'
+stages:
+  - stage: Build
+    jobs:
+    - job: Build
+      steps:
+      - task: Docker@2
+        inputs:
+          containerRegistry: 'warsztaty.azurecr.io'
+          repository: 'MinApi'
+          command: 'buildAndPush'
+          Dockerfile: 'src/MinApi/Dockerfile'
+          buildContext: 'src/MinApi/'
