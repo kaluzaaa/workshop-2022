@@ -41,6 +41,7 @@ metadata:
   labels:
     name: minapi
 spec:
+  ingressClassName: nginx
   rules:
   - host: minapi.gp.kaluzny.io
     http:
