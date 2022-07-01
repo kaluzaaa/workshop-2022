@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minapi
+spec:
+  selector:
+    matchLabels:
+      app: minapi
+  template:
+    metadata:
+      labels:
+        app: minapi
+    spec:
+      containers:
+      - name: minapi
+        image:  warsztaty.azurecr.io/minapi:#{BUILD_BUILDID}#
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        ports:
+        - name: http
+          containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minapi
+spec:
+  selector:
+    app: minapi
+  ports:
+  - port: 80
+    targetPort: http
+    name: http
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minapi
+  labels:
+    name: minapi
+spec:
+  rules:
+  - host: minapi.gp.kaluzny.io
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: minapi
+            port: 
+              number: 80
+
